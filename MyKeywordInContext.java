@@ -47,6 +47,25 @@ public class MyKeywordInContext implements KeywordInContext {
 
     @Override
     public void indexLines() {
+                MyIndexable.DefaultDict<String, List<Integer>> dict =
+                new MyIndexable.DefaultDict<String, List<Integer>>(ArrayList.class);
+
+        for (int i = 0; i < list_of_lines.size(); i++) {
+            List<String> new_list = new ArrayList<String>();
+            new_list = list_of_lines.get(i);
+            for (int j=0; j<new_list.size(); j++) {
+                String entry = new_list.get(j);
+                entry = entry.toLowerCase();
+                if (stop_list.contains(entry) == false){
+                    if (dict.containsKey(entry) == false) {
+                        dict.put(entry, Collections.singletonList(i+1));
+                    }
+                    else if (dict.containsKey(entry) == true) {
+                        dict.get(entry).add(i+1);
+                    }
+                }
+            }
+        }
         // TODO Auto-generated method stub
     }
 
